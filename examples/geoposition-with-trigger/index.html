@@ -44,30 +44,30 @@
     </script>
 
     <div hidden>    
-      <div id="gtdiv" class="label">Georgia Tech</div>
+      <div id="cloughdiv" class="label">Clough</div>
       <div id="skilesdiv" class="label">Skiles</div>
       <div id="tsrbdiv" class="label">TSRB</div>
+      <div id="cloughpin" class="pin"><i class="fa fa-map-marker" aria-hidden="true"></i></div>
+      <div id="skilespin" class="pin"><i class="fa fa-map-marker" aria-hidden="true"></i></div>
+      <div id="tsrbpin" class="pin"><i class="fa fa-map-marker" aria-hidden="true"></i></div>
     </div>
     <ar-scene>
-      <a-assets>
-        <img id="buzzpin" src="../resources/textures/buzz-pin.png">
-      </a-assets>
-      <ar-geopose id="GT" lla="-84.394539 33.772501" userotation="false" trigger="radius:100;event:target_trigger"> 
+      <ar-geopose id="Clough" lla="-84.396324 33.774379 289" userotation="false" trigger="radius:23;event:nearClough"> 
          <a-entity fixedsize="0.05" billboard>
-           <a-plane rotation="0 0 0" width="2.9" height="4" src="#buzzpin" transparent="true" ></a-plane>
-           <a-entity css-object="div: #gtdiv" scale="0.02 0.02 0.02" position="0 4 0" showdistance="Tech Tower @ Georgia Tech<br>Atlanta, GA, USA<br>It is "></a-entity>
+           <a-entity css-object="div: #cloughpin" scale="0.05 0.05 0.05" position="0 0 0"></a-entity>
+           <a-entity css-object="div: #cloughdiv" scale="0.02 0.02 0.02" position="0 3 0" showdistance="Clough Building<br>It is "></a-entity>
         </a-entity>
       </ar-geopose>
-      <ar-geopose id="Skiles" lla="-0.076057 51.507953" userotation="false" trigger="radius:100;event:target_trigger"> 
+      <ar-geopose id="Skiles" lla="-84.396151 33.773704 289" userotation="false" trigger="radius:23;event:nearSkiles"> 
          <a-entity fixedsize="0.05" billboard>
-           <a-entity css-object="div: #londonpin" scale="0.05 0.05 0.05" position="0 0 0"></a-entity>
-           <a-entity css-object="div: #londondiv" scale="0.02 0.02 0.02" position="0 3 0" showdistance="Skiles Building<br>It is "></a-entity>
+           <a-entity css-object="div: #skilespin" scale="0.05 0.05 0.05" position="0 0 0"></a-entity>
+           <a-entity css-object="div: #skilesdiv" scale="0.02 0.02 0.02" position="0 3 0" showdistance="Skiles Building<br>It is "></a-entity>
         </a-entity>
       </ar-geopose>
-      <ar-geopose id="TSRB" lla="151.215286 -33.856900" userotation="false" trigger="radius:100;event:target_trigger"> 
+      <ar-geopose id="TSRB" lla="-84.389720 33.777297 289" userotation="false" trigger="radius:23;event:nearTSRB"> 
          <a-entity fixedsize="0.05" billboard>
-           <a-entity css-object="div: #sydneypin" scale="0.05 0.05 0.05" position="0 0 0"></a-entity>
-           <a-entity css-object="div: #sydneydiv" scale="0.02 0.02 0.02" position="0 3 0" showdistance="TSRB<br>It is "></a-entity>
+           <a-entity css-object="div: #tsrbpin" scale="0.05 0.05 0.05" position="0 0 0"></a-entity>
+           <a-entity css-object="div: #tsrbdiv" scale="0.02 0.02 0.02" position="0 3 0" showdistance="TSRB<br>It is "></a-entity>
         </a-entity>
       </ar-geopose>
      </ar-scene>
@@ -75,24 +75,26 @@
       <script>
 
       // Make sure the scene has loaded
-      var scene = document.querySelector('ar-scene');
+ /*     var scene = document.querySelector('ar-scene');
       if (scene.hasLoaded) {
       setupEvents();
       } else {
       scene.addEventListener('loaded', setupEvents);
-      }  
+      }  */
 
-      function setupEvents {
-        var GTPos = document.querySelector("#GT");
-        GTPos.addEventListener('target_trigger', function(evt) {
-          alert("you are near GT.");
+setupEvents();
+
+      function setupEvents () {
+        var CloughPos = document.querySelector("#Clough");
+        CloughPos.addEventListener('nearClough', function(evt) {
+          alert("you are near Clough.");
         });
-        var SkilesPos = document.querySelector("#SKiles");
-        SkilesPos.addEventListener('target_trigger', function(evt) {
+        var SkilesPos = document.querySelector("#Skiles");
+        SkilesPos.addEventListener('nearSkiles', function(evt) {
           alert("you are near Skiles.");
         });      
         var TSRBPos = document.querySelector("#TSRB");
-        TSRBPos.addEventListener('target_trigger', function(evt) {
+        TSRBPos.addEventListener('nearTSRB', function(evt) {
           alert("you are near TSRB.");
         });
       }
