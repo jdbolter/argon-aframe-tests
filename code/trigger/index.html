@@ -1,0 +1,82 @@
+<html>
+  <head>
+    <title>Hello, World! Argon + A-Frame</title>
+    <meta name="description" content="Hello, World! Geolocation Argon + A-Frame">
+    <script src="../resources/js/aframe.min.js"></script>
+    <script src="../resources/js/argon.min.js"></script>
+    <script src="../build.js"></script>
+    <script src="../resources/js/CSS3DArgonRenderer.js"></script>
+    <script src="../resources/js/CSS3DArgonHUD.js"></script>
+    <script src="../resources/js/aframe-look-at-component.js"></script>
+    <link rel="stylesheet" href="../resources/css/font-awesome.min.css">
+	  <link rel="stylesheet" type="text/css" href="../resources/style.css">
+  </head>
+  <body>
+    <script>
+     AFRAME.registerComponent('showdistance', {
+        schema: { 
+          default: ""
+        },
+
+        init: function () {
+            this.text = "";
+            console.log('initializing the showdistance component');
+        },
+
+        update: function () {
+          this.text = this.data;
+          console.log('updating the showdistance component');
+        },
+
+        tick: function (t) {
+          var object3D = this.el.object3D;
+          var camera = this.el.sceneEl.camera;
+          if (!camera) {return;}
+          var cameraPos = camera.getWorldPosition();
+          var thisPos = object3D.getWorldPosition();
+          var distance = Math.round(thisPos.distanceTo(cameraPos));
+
+          var cssDiv = this.el.getObject3D('div');
+          var msg = this.text + distance + " meters away";
+          cssDiv.elements[0].innerHTML = msg;
+          cssDiv.elements[1].innerHTML = msg;
+        }
+      });
+    </script>
+
+     <div >    
+      <div id="posdiv" class="label">Position</div>
+    </div>
+
+    <ar-scene>
+      <ar-geopose id="myhometarget" lla="-84.396550 33.774352 289" userotation="false" trigger="radius:23;event:nearDakota"> 
+          <a-entity  billboard>
+          <a-entity css-object="div: #posdiv" scale=".05 .05 .05" position="0 0 0" showdistance="Distance:  "></a-entity>
+          </a-entity>
+      </ar-geopose> 
+   
+   
+     </ar-scene>
+
+      <script>
+    
+      // Make sure the scene has loaded
+     var scene = document.querySelector('ar-scene');
+     console.log("in the code after doing the querySelector");
+      if (scene.hasLoaded) {
+      setupEvents();
+      } else {
+      console.log("waiting to load setUpEvents");
+      scene.addEventListener('loaded', setupEvents);
+      } 
+
+      function setupEvents () {
+        console.log("in setup Events");
+      var TSRBPos = document.querySelector("#myhometarget");
+        TSRBPos.addEventListener('nearDakota', function(evt) {
+          alert("you are near Dakota.");
+        }); 
+      }
+    </script>  
+  </body>
+</html>
