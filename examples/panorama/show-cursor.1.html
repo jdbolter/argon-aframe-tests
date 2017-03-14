@@ -18,9 +18,10 @@
       <div id="mydiv" class="boxface">Argon<br>+<br>AFrame</div>
       <div id="mydiv2" class="boxface">WebGL<br>+<br>CSS</div>
     </div>
+    <div id="menu" class="menu"></div>
     <ar-scene desiredreality="src:url(../resources/reality/panorama/index.html);" panorama__1="src:url(panoramas/1.jpg);lla:-84.3951 33.7634 206;initial:true;" panorama__2="src:url(panoramas/2.jpg);lla:'-84.3931 33.7608 309';" panorama__3="src:url(panoramas/3.jpg);lla:'-84.38584 33.79035 289';" panorama__4="src: url(panoramas/4.jpg);lla:'-84.37427 33.78577 271';">
       <a-entity id="helloworld" position="0 -1 -8">
-      <a-plane rotation="-45 0 0" width="4" height="4" color="#990000" cursor-listener></a-plane>
+      <a-plane rotation="-90 30 0" width="4" height="4" color="#7BC8A4" cursor-listener></a-plane>
       </a-entity>
       <ar-camera>
         <a-entity id="myCursor" cursor="fuse:true; fuse-timeout: 1500"
@@ -61,8 +62,35 @@
         content.setAttribute("position", {x: vec.x, y: vec.y, z: vec.z});
       });
 
+      var panoramas = [
+        { text: 'Facade', name: '1' },
+        { text: 'Library', name: '2' },
+        { text: 'Skeleton', name: '3' },
+        { text: 'Lounge', name: '4'}
+      ];
 
-      arScene.addEventListener('argon-initialized', function(evt) {   
+      var currentPanorama;
+      // get the menu element
+      var menu = document.getElementById('menu');
+      // add buttons to the menu for each panorama
+      panoramas.forEach(function (p) {
+          var button = document.createElement('button');
+          button.textContent = p.text;
+          menu.appendChild(button);
+          // when a button is tapped, have the reality fade in the corresponding panorama
+          button.addEventListener('click', function () {
+              arScene.sceneEl.emit('showpanorama', { name: p.name });     
+          });
+      });
+
+      arScene.addEventListener('argon-initialized', function(evt) {
+        arScene.sceneEl.hud.appendChild(menu);
+        arScene.sceneEl.argonApp.focusEvent.addEventListener(function () {
+            document.getElementById('menu').style.display = 'block';
+        });
+        arScene.sceneEl.argonApp.blurEvent.addEventListener(function () {
+            document.getElementById('menu').style.display = 'none';
+        });      
       });
     </script>
   </body>
