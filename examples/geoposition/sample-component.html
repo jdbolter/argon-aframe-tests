@@ -37,7 +37,7 @@
   
   		 var gpsCartographicDeg = [0, 0, 0];
     	// get user position in global coordinates
-    	var userPoseFIXED = app.context.getEntityPose(app.context.user, entityFIXED);
+    	var userPoseFIXED = app.context.getEntityPose(app.context.user, entity.FIXED);// check with cesiumEntity has this attribute
     	var userLLA = Cesium.Ellipsoid.WGS84.cartesianToCartographic(userPoseFIXED.position);
     	if (userLLA) {
         	gpsCartographicDeg = [
