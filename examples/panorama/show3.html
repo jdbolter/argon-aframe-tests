@@ -1,0 +1,74 @@
+<html>
+  <head>
+    <title>Hello, World! Argon + A-Frame</title>
+    <meta name="description" content="Hello, World! Argon + A-Frame">
+    <script src="../resources/js/aframe.js"></script>
+    <script src="../resources/js/argon.min.js"></script>
+    <script src="../build.js"></script>
+    <script src="../resources/js/CSS3DArgonRenderer.js"></script>
+    <script src="../resources/js/CSS3DArgonHUD.js"></script>
+    <script src="../resources/js/aframe-look-at-component.js"></script>
+	  <link rel="stylesheet" type="text/css" href="../resources/style.css">
+  </head>
+  <body>
+    <script>
+
+	  </script>
+    <div hidden>
+      <div id="mydiv" class="boxface">Ändra Panorama</div>
+    </div>
+    <ar-scene desiredreality="src:url(../resources/reality/panorama/index.html);" panorama__9="src:url(panoramas/9.jpg);lla:-84.3951 33.7634 206;initial:true;" panorama__10="src:url(panoramas/10.jpg);lla:'-84.3931 33.7608 309';" panorama__11="src:url(panoramas/11.jpg);lla:'-84.38584 33.79035 289';" panorama__12="src: url(panoramas/12.jpg);lla:'-84.37427 33.78577 271';">
+
+      <a-assets>
+    <img id="my-texture" src="MAH.png">
+  </a-assets>
+
+      <a-entity id="helloworld" position="0 0 -8">
+  <!--    <a-entity css-object="div: #mydiv" scale="0.01 0.01 0.01" rotation="0 0 0" position="0 5 0"> </a-entity>  -->
+      <a-plane rotation="0 0 0" width="4" height="4" position="0 5 -8" color="#999999"  material="src: #my-texture" cursor-listener></a-plane>
+      </a-entity>
+      <ar-camera>
+        <a-entity id="myCursor" cursor="fuse:true; fuse-timeout: 1500"
+                    position="0 0 -0.1"
+                    geometry="primitive:ring; radiusInner: 0.001; radiusOuter: 0.0015"
+                    material="color: #2E3A87; opacity:0.3;">          
+        </a-entity>
+      </ar-camera>   
+    </ar-scene>
+    <script>
+      var arScene = document.querySelector('ar-scene');
+      var content = document.querySelector('#helloworld');
+      var panoNums = ["9", "10", "11", "12"];
+      var i = -1;
+      var maxNum = 3;
+      AFRAME.registerComponent('cursor-listener', {
+        init: function () {
+          console.log("cursor-listener registered");
+          this.el.addEventListener('click', function (evt) {
+            if (i>=maxNum){
+              i = 0;
+            } else {
+              i = i + 1;
+            }           
+            console.log("firing the pano event with panoNum = ",i);
+            arScene.sceneEl.emit('showpanorama', {name: panoNums[i]});
+          });
+        }
+      });
+
+      // the ar-camera has an argon reference frame attached, so when it gets it's first value,
+      // we'll get this event 
+      arScene.addEventListener("referenceframe-statuschanged", function () {
+        var camera = document.querySelector('ar-camera');
+        var vec = camera.object3D.getWorldDirection();
+        vec.multiplyScalar(-10);
+        vec.y -= 1;
+        content.setAttribute("position", {x: vec.x, y: vec.y, z: vec.z});
+      });
+
+
+      arScene.addEventListener('argon-initialized', function(evt) {   
+      });
+    </script>
+  </body>
+</html>

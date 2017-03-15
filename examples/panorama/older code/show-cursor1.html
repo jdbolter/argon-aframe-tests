@@ -15,12 +15,13 @@
 
 	  </script>
     <div hidden>
-      <div id="mydiv" class="boxface">Argon<br>+<br>AFrame</div>
-      <div id="mydiv2" class="boxface">WebGL<br>+<br>CSS</div>
+      <div id="mydiv" class="boxface">Ändra Panorama</div>
+      <img src="MAH.png"> 
     </div>
     <ar-scene desiredreality="src:url(../resources/reality/panorama/index.html);" panorama__1="src:url(panoramas/1.jpg);lla:-84.3951 33.7634 206;initial:true;" panorama__2="src:url(panoramas/2.jpg);lla:'-84.3931 33.7608 309';" panorama__3="src:url(panoramas/3.jpg);lla:'-84.38584 33.79035 289';" panorama__4="src: url(panoramas/4.jpg);lla:'-84.37427 33.78577 271';">
-      <a-entity id="helloworld" position="0 -1 -8">
-      <a-plane rotation="-45 0 0" width="4" height="4" color="#990000" cursor-listener></a-plane>
+      <a-entity id="helloworld" position="0 2 -8">
+    <!--  <a-entity css-object="div: #mydiv" scale="0.01 0.01 0.01" rotation="0 0 0" position="0 0 0"> </a-entity> -->
+      <a-plane rotation="90 0" width="4" height="4" color="#000099" cursor-listener></a-plane>
       </a-entity>
       <ar-camera>
         <a-entity id="myCursor" cursor="fuse:true; fuse-timeout: 1500"
