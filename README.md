@@ -1,4 +1,4 @@
 # ar-frame-tests
-For testing argon-aframe features before they are put into the sample or example code for argon aframe
+This repo contains folder with ad hoc tests of features in argon-aframe. Nothing is guaranteed to work. It is public so that those who are involved in debugging argon (see the public slack channel: argonjs) can access the relevant code.
 
 
